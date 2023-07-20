@@ -47,6 +47,8 @@ function App() {
   const [countdown, setCountdown] = useState({ days: "", hours: "", minutes: "", seconds: "" })
   const [leaderboard,setLeaderboard] = useState([])
   const [llCountdown,setllCoundown] = useState()
+  const [dividend,setDividend] = useState()
+
   // connect smart contract with ui
 
 
@@ -67,12 +69,11 @@ function App() {
     
   if(window.ethereum){
   try {
-
      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    
+    console.log(chainId,"...")
 
       //if(chainId=="0x13881"){
-        if (chainId !== "0xaa36a7") {
+        if (chainId == "0xaa36a7") {
 
     console.log("contract balance");
     // const eth = await contract.contractBalance();
@@ -90,13 +91,57 @@ function App() {
  
 
   }
+
+   //get the total ether in the user
+   async function getDividend() {
+    
+    if(window.ethereum){
+      if(isConnected){
+
+      
+    try {
+       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      console.log(chainId,"...")
+  
+        //if(chainId=="0x13881"){
+          if (chainId == "0xaa36a7") {
+  
+      console.log("contract balance");
+      // const eth = await contract.contractBalance();
+      const eth = await contractCall.methods.getDividend(address).call();
+ if(eth[1]){
+  setDividend(parseFloat(eth[0]/10**18));
+ // setDividend(parseFloat(1000000000000000000/10**18));
+
+   }
+      console.log("Dividend : ", eth.toString());
+        }
+     } catch (error) {
+       console.log("error : ", error);
+    }
+  }else{
+    console.log("connect metamask")
+
+  }
+    }else{
+     console.log("install metamask")
+    }
+   
+  
+    }
   useEffect(() => {
     
-// if (isConnected) {
       contractBalance();
-   // }
+ 
   }, [])
 
+
+  useEffect(() => {
+    
+
+    getDividend()
+  
+}, [isConnected])
 
 
   //check the chain if it is mumbai testnet
@@ -1042,8 +1087,8 @@ if(window.ethereum){
                   <h1 className='text-3xl text-white'>Claims:</h1>
                   <div className='py-4 flex gap-4 flex-wrap '>
                   <button className='bg-green px-5 py-2 text-white rounded-lg text-2xl' onClick={() => insuranceClaim()}>Insurance</button>
-                <button className='bg-green px-5 py-2 text-white rounded-lg text-2xl'onClick={() => lastBuyerClaim()}>Leaderboard</button>
-                <button className='bg-green px-5 py-2 text-white rounded-lg text-2xl'onClick={() => leaderClaim()}>Pool</button>
+                <button className='bg-green px-5 py-2 text-white rounded-lg text-2xl'onClick={() => lastBuyerClaim()}>Pool</button>
+                <button className='bg-green px-5 py-2 text-white rounded-lg text-2xl'onClick={() => leaderClaim()}>Leaderboard</button>
               </div>
                 </div>
               </div>
@@ -1105,13 +1150,20 @@ if(window.ethereum){
           Your PONZU3 is balance of {userToken} is now worth{" "}
           <span className="text-green font-bold">{userEth}  </span> Eth
         </p> */}
-                <p className="text-white  text-center pt-4 text-lg md:text-3xl">
+               {dividend == undefined? <p className="text-white  text-center pt-4 text-lg md:text-3xl">
                   Your<span className='pt-4 pb-5 px-2 bg-[#FD4674] text-white'>
                     PONZU3 dividends: <span className='text-[#68EB92]'>0.0</span>
                   </span>
                   Eth
                 </p>
-
+                :
+                <p className="text-white  text-center pt-4 text-lg md:text-3xl">
+                  Your<span className='pt-4 pb-5 px-2 bg-[#FD4674] text-white'>
+                    PONZU3 dividends: <span className='text-[#68EB92]'>{(dividend).toFixed(3)}</span>
+                  </span>
+                  Eth
+                </p>
+}
                 <div className='text-center mb-[-3rem]'>
                 <button className="bg-green px-[4rem]  border-darkgreen  border-4 font-bold text-2xl py-2 rounded-lg " onClick={back?swapBack:swapBack}> Claim</button>
                 </div>
