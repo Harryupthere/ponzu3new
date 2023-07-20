@@ -1098,7 +1098,7 @@ if(window.ethereum){
                   ETH POOL:
                 </h1>
                 <h1 className="text-center font-bold text-5xl text-white py-5 leading-8">
-                  {totalEth / 10 ** 18}
+                  {parseFloat(totalEth / 10 ** 18).toFixed(2)}
                 </h1>
                 <div className="justify-center flex flex-col mb-5 relative">
                   <div className=" flex justify-between border-4 px-4  border-purple relative rounded-lg  w-full bg-white focus-0 mb-3  mx-auto py-1">
