@@ -16,7 +16,7 @@ import Abi1 from './abi.json';
 
 
 const web3 = new Web3(window.ethereum);
-let Address1 = "0x70CdF4bF1af9afcdfE7dD67a8c2b33A8841e3ef9"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
+let Address1 = "0xB0805C62446785DF600edbA5a41bEc4bD6C22926"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
 let contractCall = new web3.eth.Contract(Abi1, Address1);
 const chains = [polygonMumbai, mainnet, polygon,sepolia]
 const projectId = 'e5ee2dc4de76240fc63dcea932f9ad42'
@@ -73,14 +73,14 @@ function App() {
      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     console.log(chainId,"...")
 
-      //if(chainId=="0x13881"){
-        if (chainId == "0xaa36a7") {
+      if(chainId=="0x13881"){
+      //  if (chainId == "0xaa36a7") {
 
     console.log("contract balance");
     // const eth = await contract.contractBalance();
-    const eth = await contractCall.methods.contractBalance().call();
-
-    setTotalEth(eth.toString());
+    let eth = await contractCall.methods.contractBalance().call();
+    eth=eth/10**18
+    setTotalEth(eth);
     console.log("total ether : ", eth.toString());
       }
    } catch (error) {
@@ -104,8 +104,8 @@ function App() {
        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       console.log(chainId,"...")
   
-        //if(chainId=="0x13881"){
-          if (chainId == "0xaa36a7") {
+        if(chainId=="0x13881"){
+          //if (chainId == "0xaa36a7") {
   
       console.log("contract balance");
       // const eth = await contract.contractBalance();
@@ -152,8 +152,8 @@ function App() {
       const chainId = await ethereum.request({ method: 'eth_chainId' });
 
       setChainId(chainId);
-      // if(chainId!=="0x13881"){
-      if (chainId !== "0xaa36a7") {
+       if(chainId!=="0x13881"){
+      //if(chainId !== "0xaa36a7") {
 
         Swal.fire({
           icon: "error",
@@ -255,8 +255,8 @@ function App() {
   async function swap(){
     setTxnLoading(true);
     if(isConnected){
-    //if(chainId!=="0x13881"){
-      if (chainId !== "0xaa36a7") {
+    if(chainId!=="0x13881"){
+      //if(chainId !== "0xaa36a7") {
 
       setTxnLoading(false);
       Swal.fire({
@@ -308,13 +308,13 @@ function App() {
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
      
 
       } catch (error) {
-        console.log(error)
-        let errMsg = error.code == 100 ? error : error
+        console.log(error.message)
+        let errMsg = error.code == 4001 ? error.message : error.data.message
         Swal.fire({
           icon: "error",
           title: "Transaction Failed",
@@ -322,7 +322,7 @@ function App() {
         });
         setInterval(()=>{
           window.location.reload(true)
-        },300)
+        },3000)
       }
     }
   }
@@ -335,7 +335,7 @@ function App() {
     });
     setInterval(()=>{
       window.location.reload(true)
-    },300)
+    },3000)
   }
   }
 
@@ -343,8 +343,8 @@ function App() {
   async function swapBack(){
     setTxnLoading(true);
     if(isConnected){
-    //if(chainId!=="0x13881"){
-     if (chainId !== "0xaa36a7") {
+    if(chainId!=="0x13881"){
+    // if (chainId !== "0xaa36a7") {
 
       setTxnLoading(false);
       Swal.fire({
@@ -389,12 +389,12 @@ function App() {
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
 
       } catch (error) {
         console.log(error)
-        let errMsg = error.code == 100 ? error.message : error
+        let errMsg = error.code == 4001 ? error.message : error.data.message
         Swal.fire({
           icon: "error",
           title: "Transaction Failed",
@@ -415,7 +415,7 @@ function App() {
     });
     setInterval(()=>{
       window.location.reload(true)
-    },300)
+    },3000)
   }
   }
   
@@ -508,7 +508,7 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
             });
             setInterval(()=>{
               window.location.reload(true)
-            },300)
+            },3000)
           }
           }else{
             setTxnLoading(false);
@@ -522,7 +522,7 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
 
         } catch (error) {
           console.log(error)
-          let errMsg = error.code == 100 ? error : error
+          let errMsg = error.code == 4001 ? error.message : error.data.message
           Swal.fire({
             icon: "error",
             title: "Transaction Failed",
@@ -530,7 +530,7 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
       }
     })
@@ -610,7 +610,7 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
             });
             setInterval(()=>{
               window.location.reload(true)
-            },300)
+            },3000)
           }
         }else{
           setTxnLoading(false);
@@ -627,7 +627,7 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
           setTxnLoading(false);
 
           console.log(error)
-          let errMsg = error.code == 100 ? error : error
+          let errMsg = error.code == 4001 ? error.message : error.data.message
           Swal.fire({
             icon: "error",
             title: "Transaction Failed",
@@ -635,7 +635,7 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
       }
     })
@@ -699,14 +699,14 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
       
       } catch (error) {
         setTxnLoading(false);
 
-        console.log(error.code == 100 ? error.message : "uu")
-        let errMsg = error.code == 100 ? error.message : error.data.message
+        console.log(error)
+        let errMsg = error.code == 4001 ? error.message : error
         Swal.fire({
           icon: "error",
           title: "Transaction Failed",
@@ -778,14 +778,14 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
 
       } catch (error) {
         setTxnLoading(false);
 
         console.log(error)
-        let errMsg = error.code == 100 ? error : error
+        let errMsg = error.code == 4001 ? error.message : error
         Swal.fire({
           icon: "error",
           title: "Transaction Failed",
@@ -857,14 +857,14 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
           });
           setInterval(()=>{
             window.location.reload(true)
-          },300)
+          },3000)
         }
 
       } catch (error) {
         setTxnLoading(false);
 
         console.log(error)
-        let errMsg = error.code == 100 ? error.message : error
+        let errMsg = error.code == 4001 ? error.message : error
         Swal.fire({
           icon: "error",
           title: "Transaction Failed",
@@ -1003,8 +1003,8 @@ if(ss>0)
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
      
       setChainId(chainId);
-     // if (chainId !== "0x13881") {
-     if (chainId !== "0xaa36a7") {
+      if (chainId !== "0x13881") {
+     //if (chainId !== "0xaa36a7") {
 
         
 
@@ -1129,7 +1129,7 @@ if(ss>0)
                   ETH POOL:
                 </h1>
                 <h1 className="text-center font-bold text-5xl text-white py-5 leading-8">
-                  {parseFloat(totalEth / 10 ** 18).toFixed(2)}
+                  {(totalEth).toFixed(2)}
                 </h1>
                 <div className="justify-center flex flex-col mb-5 relative">
                   <div className=" flex justify-between border-4 px-4  border-purple relative rounded-lg  w-full bg-white focus-0 mb-3  mx-auto py-1">
@@ -1190,7 +1190,7 @@ if(ss>0)
                 :
                 <p className="text-white  text-center pt-4 text-lg md:text-3xl">
                   Your<span className='pt-4 pb-5 px-2 bg-[#FD4674] text-white'>
-                    PONZU3 dividends: <span className='text-[#68EB92]'>{(dividend).toFixed(3)}</span>
+                    PONZU3 dividends: <span className='text-[#68EB92]'>{(dividend).toFixed(5)}</span>
                   </span>
                   Eth
                 </p>
