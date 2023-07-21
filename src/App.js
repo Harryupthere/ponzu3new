@@ -16,7 +16,7 @@ import Abi1 from './abi.json';
 
 
 const web3 = new Web3(window.ethereum);
-let Address1 = "0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
+let Address1 = "0x70CdF4bF1af9afcdfE7dD67a8c2b33A8841e3ef9"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
 let contractCall = new web3.eth.Contract(Abi1, Address1);
 const chains = [polygonMumbai, mainnet, polygon,sepolia]
 const projectId = 'e5ee2dc4de76240fc63dcea932f9ad42'
@@ -976,8 +976,8 @@ if(window.ethereum){
     try {
 if(window.ethereum){
 
-
-
+if(ss>0)
+{
        var distance = parseInt(ss-1)
        setllCoundown(distance)
 
@@ -989,7 +989,10 @@ if(window.ethereum){
       var s = Math.floor(distance % 60)
       //console.log({days:d,hours:h,minutes:m,seconds:s})
         setCountdown({days:d,hours:h,minutes:m,seconds:s})
-        
+}else{
+        setCountdown({days:0,hours:0,minutes:0,seconds:0})
+
+}     
 }
     } catch (error) {
       console.log("error : ", error);
