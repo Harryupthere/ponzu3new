@@ -12,7 +12,8 @@ import { polygonMumbai, mainnet, polygon, sepolia } from 'wagmi/chains'
 import './App.css';
 import connectContract, { contract } from './connectContract';
 import Web3 from 'web3';
-import Abi1 from './abi.json'
+import Abi1 from './abi.json';
+
 
 const web3 = new Web3(window.ethereum);
 let Address1 = "0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
@@ -436,7 +437,10 @@ function App() {
   //   }
   // },[])
   async function insurance() {
+
     if (!isConnected) {
+    setTxnLoading(false);
+
       Swal.fire({
         icon: "error",
         title: "Transaction Failed",
@@ -466,10 +470,12 @@ function App() {
           return
         }
         try {
+          setTxnLoading(true);
+
           let balanceOf = await contractCall.methods.balanceOf(address).call()
 
-          result.value=result.value*10**18
-console.log(balanceOf,result.value)
+          result.value=(result.value*10**18).toLocaleString('fullwide', {useGrouping:false})
+console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false}))
           if(balanceOf>=result.value){
           let insurance = await contractCall.methods.Insurance(result.value.toString())
           let encoded_tx = insurance.encodeABI();
@@ -505,6 +511,8 @@ console.log(balanceOf,result.value)
             },300)
           }
           }else{
+            setTxnLoading(false);
+
             Swal.fire({
               icon: "error",
               title: "Transaction Failed",
@@ -514,7 +522,7 @@ console.log(balanceOf,result.value)
 
         } catch (error) {
           console.log(error)
-          let errMsg = error.code == 100 ? error.message : error.data.message
+          let errMsg = error.code == 100 ? error : error
           Swal.fire({
             icon: "error",
             title: "Transaction Failed",
@@ -531,6 +539,8 @@ console.log(balanceOf,result.value)
 
   async function burningTime() {
     if (!isConnected) {
+      setTxnLoading(false);
+
       Swal.fire({
         icon: "error",
         title: "Transaction Failed",
@@ -560,9 +570,11 @@ console.log(balanceOf,result.value)
           return
         }
         try {
+          setTxnLoading(true);
+
           let balanceOf = await contractCall.methods.balanceOf(address).call()
 
-          result.value=result.value*10**18
+          result.value=(result.value*10**18).toLocaleString('fullwide', {useGrouping:false})
 
           if(balanceOf>=result.value){
 
@@ -601,6 +613,8 @@ console.log(balanceOf,result.value)
             },300)
           }
         }else{
+          setTxnLoading(false);
+
           Swal.fire({
             icon: "error",
             title: "Transaction Failed",
@@ -610,8 +624,10 @@ console.log(balanceOf,result.value)
 
          
         } catch (error) {
+          setTxnLoading(false);
+
           console.log(error)
-          let errMsg = error.code == 100 ? error.message : error.data.message
+          let errMsg = error.code == 100 ? error : error
           Swal.fire({
             icon: "error",
             title: "Transaction Failed",
@@ -650,6 +666,8 @@ console.log(balanceOf,result.value)
         return
       }
       try {
+        setTxnLoading(true);
+
         let insuranceClaim = await contractCall.methods.insuranceClaim()
         let encoded_tx = insuranceClaim.encodeABI();
 
@@ -685,6 +703,8 @@ console.log(balanceOf,result.value)
         }
       
       } catch (error) {
+        setTxnLoading(false);
+
         console.log(error.code == 100 ? error.message : "uu")
         let errMsg = error.code == 100 ? error.message : error.data.message
         Swal.fire({
@@ -725,6 +745,8 @@ console.log(balanceOf,result.value)
         return
       }
       try {
+        setTxnLoading(true);
+
         let lastBuyerClaim = await contractCall.methods.lastBuyerClaim()
         let encoded_tx = lastBuyerClaim.encodeABI();
 
@@ -760,6 +782,8 @@ console.log(balanceOf,result.value)
         }
 
       } catch (error) {
+        setTxnLoading(false);
+
         console.log(error)
         let errMsg = error.code == 100 ? error : error
         Swal.fire({
@@ -800,6 +824,8 @@ console.log(balanceOf,result.value)
         return
       }
       try {
+        setTxnLoading(true);
+
         let leaderClaim = await contractCall.methods.leaderClaim()
         let encoded_tx = leaderClaim.encodeABI();
 
@@ -835,6 +861,8 @@ console.log(balanceOf,result.value)
         }
 
       } catch (error) {
+        setTxnLoading(false);
+
         console.log(error)
         let errMsg = error.code == 100 ? error.message : error
         Swal.fire({
