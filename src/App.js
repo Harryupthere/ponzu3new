@@ -271,16 +271,16 @@ function App() {
          console.log(walletbalance)
         
         let value = value1 * 10**18
-      if(walletbalance<=value){
-      setTxnLoading(false);
+      // if(walletbalance<=value){
+      // setTxnLoading(false);
 
-        Swal.fire({
-          icon: "error",
-          title: "Transaction Failed",
-          text: "Insufficient fund to transafer please try with low amount"//error.message || error.reason || error.data.message,
-        });
-        return
-      }
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Transaction Failed",
+      //     text: "Insufficient fund to transafer please try with low amount"//error.message || error.reason || error.data.message,
+      //   });
+      //   return
+      // }
 
  
         let swap = await contractCall.methods.swap()
