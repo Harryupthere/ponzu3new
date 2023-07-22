@@ -271,7 +271,7 @@ function App() {
          console.log(walletbalance)
         
         let value = value1 * 10**18
-      if(walletbalance>=value){
+      if(walletbalance<=value){
       setTxnLoading(false);
 
         Swal.fire({
