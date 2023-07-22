@@ -271,10 +271,18 @@ function App() {
          console.log(walletbalance)
         
         let value = value1 * 10**18
-      
+      if(walletbalance>=value){
+      setTxnLoading(false);
 
-        
-        
+        Swal.fire({
+          icon: "error",
+          title: "Transaction Failed",
+          text: "Insufficient fund to transafer please try with low amount"//error.message || error.reason || error.data.message,
+        });
+        return
+      }
+
+ 
         let swap = await contractCall.methods.swap()
         let encoded_tx = swap.encodeABI();
 
@@ -312,6 +320,11 @@ function App() {
         }
      
 
+
+     
+
+        
+       
       } catch (error) {
         console.log(error.message)
         let errMsg = error.code == 4001 ? error.message : error.data.message
