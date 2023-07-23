@@ -16,7 +16,7 @@ import Abi1 from './abi.json';
 
 
 const web3 = new Web3(window.ethereum);
-let Address1 = "0x9b1053D2d5E8D2c1D0106Ea2E3ADB13Ee43f519f"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
+let Address1 = "0x7f18A894F8a0f5378f0ABA4eCBB99fd0CD0632Fc"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
 let contractCall = new web3.eth.Contract(Abi1, Address1);
 const chains = [polygonMumbai, mainnet, polygon,sepolia]
 const projectId = 'e5ee2dc4de76240fc63dcea932f9ad42'
@@ -1205,9 +1205,9 @@ if(ss>0)
                 </p>
                 :
                 <p className="text-white  text-center pt-4 text-lg md:text-3xl">
-                  Your<span className='pt-4 pb-5 px-2 bg-[#FD4674] text-white'>
+                  Your 
                     PONZU3 dividends: <span className='text-[#68EB92]'>{(dividend).toFixed(6)}</span>
-                  </span>
+                   
                   Eth
                 </p>
 }
