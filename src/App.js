@@ -16,7 +16,7 @@ import Abi1 from './abi.json';
 
 
 const web3 = new Web3(window.ethereum);
-let Address1 = "0x2CC81532Fd98cB0BB600BB0146fb231aeB5f1871"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
+let Address1 = "0x9b1053D2d5E8D2c1D0106Ea2E3ADB13Ee43f519f"//"0xEB3681EFA230f3A09A6Fb0015214A2E5bfb563B0"
 let contractCall = new web3.eth.Contract(Abi1, Address1);
 const chains = [polygonMumbai, mainnet, polygon,sepolia]
 const projectId = 'e5ee2dc4de76240fc63dcea932f9ad42'
@@ -110,6 +110,7 @@ function App() {
       console.log("contract balance");
       // const eth = await contract.contractBalance();
       const eth = await contractCall.methods.getDividend(address).call();
+      console.log(eth)
  if(eth[1]){
   setDividend(parseFloat(eth[0]/10**18));
  // setDividend(parseFloat(1000000000000000000/10**18));
@@ -486,9 +487,9 @@ function App() {
           setTxnLoading(true);
 
           let balanceOf = await contractCall.methods.balanceOf(address).call()
-
+console.log(parseInt(balanceOf),"balanceOf")
           result.value=(result.value*10**18).toLocaleString('fullwide', {useGrouping:false})
-console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false}))
+console.log(balanceOf,"balanceOf",result.value,"value")
           if(balanceOf>=result.value){
           let insurance = await contractCall.methods.Insurance(result.value.toString())
           let encoded_tx = insurance.encodeABI();
@@ -587,7 +588,9 @@ console.log(balanceOf,result.value.toLocaleString('fullwide', {useGrouping:false
 
           let balanceOf = await contractCall.methods.balanceOf(address).call()
 
+         console.log(parseInt(balanceOf),"balanceOf")
           result.value=(result.value*10**18).toLocaleString('fullwide', {useGrouping:false})
+console.log(balanceOf,"balanceOf",result.value,"value")
 
           if(balanceOf>=result.value){
 
