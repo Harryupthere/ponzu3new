@@ -643,7 +643,7 @@ console.log(balanceOf,"balanceOf",result.value,"value")
           setTxnLoading(false);
 
           console.log(error)
-          let errMsg = error.code == 4001 ? error.message : error.data.message
+          let errMsg = error.code == 4001 ? error.message : error
           Swal.fire({
             icon: "error",
             title: "Transaction Failed",
@@ -1206,7 +1206,7 @@ if(ss>0)
                 :
                 <p className="text-white  text-center pt-4 text-lg md:text-3xl">
                   Your<span className='pt-4 pb-5 px-2 bg-[#FD4674] text-white'>
-                    PONZU3 dividends: <span className='text-[#68EB92]'>{(dividend).toFixed(5)}</span>
+                    PONZU3 dividends: <span className='text-[#68EB92]'>{(dividend).toFixed(6)}</span>
                   </span>
                   Eth
                 </p>
